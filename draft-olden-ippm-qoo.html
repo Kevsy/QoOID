@@ -32,7 +32,7 @@
     requests 2.28.1
     setuptools 65.6.0
     six 1.16.0
-    wcwidth 0.2.5
+    wcwidth 0.2.6
 -->
 <link href="draft-olden-ippm-qoo.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -376,7 +376,7 @@ dl {
 dl > dt {
   float: left;
   margin-right: 1em;
-  min-width: 12ch;
+  min-width: 8ch;
 }
 dl.dlNewline > dt {
   float: none;
@@ -407,11 +407,11 @@ dl > dd > dl {
 a, a[href].selfRef:hover {
   text-decoration: none;
 }
-a[href].selfRef {
-  color: var(--text-color);
-}
 a[href] {
   color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
 }
 a[href]:hover {
   text-decoration: underline;
@@ -1045,7 +1045,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Olden &amp; Teigen</td>
-<td class="center">Expires 15 July 2023</td>
+<td class="center">Expires 30 July 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1058,12 +1058,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-olden-ippm-qoo-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-01-11" class="published">11 January 2023</time>
+<time datetime="2023-01-26" class="published">26 January 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-07-15">15 July 2023</time></dd>
+<dd class="expires"><time datetime="2023-07-30">30 July 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1118,7 +1118,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 15 July 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 July 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1206,9 +1206,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">We propose measuring network quality as a set of latency percentiles and for application developers to describe network requirements in the same manner. We propose a formula for a distance measure between perfect and useless quality. This distance measure can calculate something that can be simplified into statements such as "A Video Conference has a 93% chance of being lag free on this network"* all while making it possible to use the framework both for end-to-end test and from within.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">The work proposes a minimum viable framework, and often trades precision for simplicity. The justification for this is to ensure adoption and usability in many different contexts such as active testing from applications and monitoring from network equipment. To counter the loss of precision, we require some parameters that allow for analysis of the precision.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">*In its full form the sentence would be something like "A Video Conference, with 2-20 users with video turned, with a maximum resolution of HD, has a 93% chance of being lag free on this network. This network is from this specific client to the Video Conference Server". We can abstract away some of the details for a typical end-user<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-1">Quality attenuation is a network quality metric that meets the three criteria we set out in the requirements; it captures the probabilty of good or bad application outcomes, it is composable, and it can be compared to a variety of application requirements. The part that is still missing is how to present quality attenuation results to end-users and application developers in an understandable way. We believe a per-application (or per application-type) approach is appropriate here. The challenge lies in how to simplify. We must specify how and when it is apporpriate to throw away information without loosing too much precision and accuracy in the results.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">We propose measuring network quality as a set of latency percentiles and for application developers to describe network requirements in the same manner. We propose a formula for a distance measure between perfect and useless quality. This distance measure can calculate something that can be simplified into statements such as "A Video Conference has a 93% chance of being lag free on this network"* all while making it possible to use the framework both for end-to-end test and from within.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">The work proposes a minimum viable framework, and often trades precision for simplicity. The justification for this is to ensure adoption and usability in many different contexts such as active testing from applications and monitoring from network equipment. To counter the loss of precision, we require some parameters that allow for analysis of the precision.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">*In its full form the sentence would be something like "A Video Conference, with 2-20 users with video turned, with a maximum resolution of HD, has a 93% chance of being lag free on this network. This network is from this specific client to the Video Conference Server". We can abstract away some of the details for a typical end-user<a href="#section-1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="proposal">

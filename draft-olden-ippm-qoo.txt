@@ -5,7 +5,7 @@
 IP Performance Measurement                                      M. Olden
 Internet-Draft                                              B. I. Teigen
 Intended status: Informational                                     Domos
-Expires: 15 July 2023                                    11 January 2023
+Expires: 30 July 2023                                    26 January 2023
 
 
                            Quality of Outcome
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 July 2023.
+   This Internet-Draft will expire on 30 July 2023.
 
 Copyright Notice
 
@@ -91,6 +91,17 @@ Table of Contents
    Authors' Addresses
 
 1.  Introduction
+
+   Quality attenuation is a network quality metric that meets the three
+   criteria we set out in the requirements; it captures the probabilty
+   of good or bad application outcomes, it is composable, and it can be
+   compared to a variety of application requirements.  The part that is
+   still missing is how to present quality attenuation results to end-
+   users and application developers in an understandable way.  We
+   believe a per-application (or per application-type) approach is
+   appropriate here.  The challenge lies in how to simplify.  We must
+   specify how and when it is apporpriate to throw away information
+   without loosing too much precision and accuracy in the results.
 
    We propose measuring network quality as a set of latency percentiles
    and for application developers to describe network requirements in
