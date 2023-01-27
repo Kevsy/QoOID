@@ -1045,7 +1045,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Olden &amp; Teigen</td>
-<td class="center">Expires 30 July 2023</td>
+<td class="center">Expires 31 July 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1058,12 +1058,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-olden-ippm-qoo-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-01-26" class="published">26 January 2023</time>
+<time datetime="2023-01-27" class="published">27 January 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-07-30">30 July 2023</time></dd>
+<dd class="expires"><time datetime="2023-07-31">31 July 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1118,7 +1118,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 July 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 31 July 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1207,9 +1207,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">Quality attenuation is a network quality metric that meets the three criteria we set out in the requirements; it captures the probabilty of good or bad application outcomes, it is composable, and it can be compared to a variety of application requirements. The part that is still missing is how to present quality attenuation results to end-users and application developers in an understandable way. We believe a per-application (or per application-type) approach is appropriate here. The challenge lies in how to simplify. We must specify how and when it is apporpriate to throw away information without loosing too much precision and accuracy in the results.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">We propose measuring network quality as a set of latency percentiles and for application developers to describe network requirements in the same manner. We propose a formula for a distance measure between perfect and useless quality. This distance measure can calculate something that can be simplified into statements such as "A Video Conference has a 93% chance of being lag free on this network"* all while making it possible to use the framework both for end-to-end test and from within.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-2">We propose measuring network quality as a set of latency percentiles and for application developers to describe network requirements in the same manner. We propose a formula for a distance measure between perfect and useless quality. This distance measure can calculate something that can be simplified into statements such as "A Video Conference has a 93% chance of being lag free on this network" all while making it possible to use the framework both for end-to-end test and from within.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">The work proposes a minimum viable framework, and often trades precision for simplicity. The justification for this is to ensure adoption and usability in many different contexts such as active testing from applications and monitoring from network equipment. To counter the loss of precision, we require some parameters that allow for analysis of the precision.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">*In its full form the sentence would be something like "A Video Conference, with 2-20 users with video turned, with a maximum resolution of HD, has a 93% chance of being lag free on this network. This network is from this specific client to the Video Conference Server". We can abstract away some of the details for a typical end-user<a href="#section-1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="proposal">
@@ -1217,20 +1216,28 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-proposal">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-proposal" class="section-name selfRef">Proposal:</a>
       </h2>
-<p id="section-2-1"><em>The Measurement:</em>
-The foundation of the framework is Latency Distributions. This work will not go into detail about how to gather them, but some techniques are:<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">Active probing with xTWAMP Light / STAMP / IRTT
-Varying Latency Under Load Tests
-Varying Speed Tests with latency measures
-Simulating real traffic
-End-to-end measurements of real traffic
-TCP SYN ACK / DNS Lookup RTT Capture
-Estimation based on other performance data<a href="#section-2-2" class="pilcrow">¶</a></p>
-<p id="section-2-3">Using Latency distributions to measure network quality is nothing new and has been proposed by various researchers/practitioners. Packet Loss is seen as infinite (or too late to be of use e.g. &gt;3 seconds) latency.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">Latency Distributions can be gathered via both passive monitoring and active testing. The active testing can use any type of IP traffic. It is OSI Layer and network technology independent, meaning it can be gathered in an end-user application, within some network equipment, or anywhere in between. It is by definition probabilistic.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-1">The foundation of the framework is Latency Distributions. This work will not go into detail about how to gather them, but some techniques are:<a href="#section-2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2-2.1">Active probing with TWAMP Light / STAMP / IRTT<a href="#section-2-2.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-2.2">Varying Latency Under Load Tests<a href="#section-2-2.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-2.3">Varying Speed Tests with latency measures<a href="#section-2-2.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-2.4">Simulating real traffic<a href="#section-2-2.4" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-2.5">End-to-end measurements of real traffic<a href="#section-2-2.5" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-2.6">TCP SYN ACK / DNS Lookup RTT Capture<a href="#section-2-2.6" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-2.7">Estimation based on other performance data<a href="#section-2-2.7" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-2-3">Using Latency distributions to measure network quality is nothing new and has been proposed by various researchers/practitioners. The novelty of the Quality Attenuation metric is to view packet Loss is seen as infinite (or too late to be of use e.g. &gt;3 seconds) latency <span>[<a href="#TR-452.1" class="cite xref">TR-452.1</a>]</span>.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">Latency Distributions can be gathered via both passive monitoring and active testing. The active testing can use any type of IP traffic. It is OSI Layer and network technology independent, meaning it can be gathered in an end-user application, within some network equipment, or anywhere in between.<a href="#section-2-4" class="pilcrow">¶</a></p>
 <p id="section-2-5">A key assumption behind the choice of latency distribution is that different applications and application categories fail at different points of the latency distribution. Some applications, typically downloads, have lenient latency requirements. Video Conferences typically are sensitive to high 90th percentile latency and to the difference between the 90th and the 99th percentile. Online gaming typically have a low tolerance for high 99th percentile latency. All applications require some level of throughput and packet loss rate. A network quality metric that aims to generalize network quality must take the latency distribution, throughput, and packet loss into consideration.<a href="#section-2-5" class="pilcrow">¶</a></p>
-<p id="section-2-6">Two statistical distributions can be convolved and deconvolved, which is mathematically sound addition and subtraction. Latency Distributions are non time entangled in the sense that you can measure a latency distribution over 10 seconds, 10 minutes, or 10 hours.<a href="#section-2-6" class="pilcrow">¶</a></p>
-<p id="section-2-7">Latency Distributions are often illustrated with Cumulative Distributions Function (CDFs) in the networking world. CDFs make it easy to show the share of packets that have arrived at their destination after specific amounts of time, and vica versa. Packet Loss can also be illustrated by the CDF not reaching 1 (100%)<a href="#section-2-7" class="pilcrow">¶</a></p>
+<p id="section-2-6">Two distributions can be composed using convolution <span>[<a href="#TR-452.1" class="cite xref">TR-452.1</a>]</span>.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">Latency Distributions are often illustrated with Cumulative Distributions Function (CDFs). CDFs make it easy to show the share of packets that have arrived at their destination after specific amounts of time, and vica versa. Packet Loss can also be illustrated by the CDF not reaching 1 (because less than 100% of packets arrive at their destination).<a href="#section-2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sampling-requirements">
@@ -1240,17 +1247,29 @@ Estimation based on other performance data<a href="#section-2-2" class="pilcrow"
       </h2>
 <p id="section-3-1">To reach the design goal of being useful in many different contexts, this work imposes no requirement on the time period or the network loading situation. This choice has pros and cons. Latency under load is extremely important, but average or median latency has a role too. However, a network quality metric that does not take latency under load into account is bound to fail at predicting application outcome.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">This framework only requires a latency distribution. If one samples latency over a time period where the network is loaded, latency under load will be part of the distribution, which is encouraged, but is not always possible, for example when passively monitoring the latency of real traffic.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">One needs quite a few samples to have a statistically significant distribution and modeling a distribution may be a challenging software engineering task, hence we need to sample the latency distribution at certain percentiles. A list of 10 percentiles in a logarithmic-esque fashion has already been suggested in industry [0th, 10th, 25th, 50th, 75th, 90th, 95th, 99th, 99.9th , 100th] and seems adequate. This is all that the framework defines. Note that convolution still works with a list of percentiles, but precision takes a hit.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-3">One needs quite a few samples to have a statistically significant distribution and modeling a distribution may be a challenging software engineering task, hence we need to sample the latency distribution at certain percentiles. A list of 10 percentiles in a logarithmic-esque fashion has already been suggested in industry [0th, 10th, 25th, 50th, 75th, 90th, 95th, 99th, 99.9th, 100th] and seems adequate. This is all that the framework defines. Note that convolution still works with a list of percentiles, but precision takes a hit.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">The framework is flexible when it comes to the direction of traffic that is being sampled, but does require that it is noted whether the latency distribution is measured one-way or two-way. The framework does not require a bandwidth measure, but requires a note on the maximal observed throughput in the time period.<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5">By not requiring a specific number of samples,. Tthis framework allows taking 10 samples and calling it a distribution, which of course is not ideal. On the other hand, making the framework too complex and difficult to adhere to using real-world equipment and applications is the best way to ensure that this framework goes unused. Constraints will vary for different network equipment and applications.<a href="#section-3-5" class="pilcrow">¶</a></p>
-<p id="section-3-6">To make sure we can trust measurements from others and analyze their precision, we require:
-Timestamp of first sample
-Timestamp of last sample
-Number of samples
-Type of measurement:
-Cyclic (a sample every Nth ms) - Specify N
-Bursts (X samples every Nth ms) - Specify X and N
-Passive (observing traffic and therefore unevenly sampled)<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-5">By not requiring a specific number of samples, this framework allows taking 10 samples and calling it a distribution, which of course is not ideal. On the other hand, making the framework too complex and difficult to adhere to using real-world equipment and applications is the best way to ensure that this framework goes unused. Constraints will vary for different network equipment and applications.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">To make sure we can trust measurements from others and analyze their precision, we require:<a href="#section-3-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-7.1">Timestamp of first sample<a href="#section-3-7.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-3-7.2">Duration of the sampling period<a href="#section-3-7.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-3-7.3">Number of samples<a href="#section-3-7.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-3-7.4">
+          <p id="section-3-7.4.1">Type of measurement:<a href="#section-3-7.4.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-7.4.2.1">Cyclic (a sample every Nth ms) - Specify N<a href="#section-3-7.4.2.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-3-7.4.2.2">Bursts (X samples every Nth ms) - Specify X and N<a href="#section-3-7.4.2.2" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-3-7.4.2.3">Passive (observing traffic and therefore unevenly sampled)<a href="#section-3-7.4.2.3" class="pilcrow">¶</a>
+</li>
+          </ul>
+</li>
+      </ul>
 </section>
 </div>
 <div id="describing-network-requirements">
@@ -1258,17 +1277,15 @@ Passive (observing traffic and therefore unevenly sampled)<a href="#section-3-6"
       <h2 id="name-describing-network-requirem">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-describing-network-requirem" class="section-name selfRef">Describing Network Requirements:</a>
       </h2>
-<p id="section-4-1">This work builds upon the work already proposed in the Broadband Forum standard called Quality of Experience Delivered (QED/TR-452). In essence, it describes network requirements as a list of percentile and latency requirement tuples. In  words: The network requirement for this app quality level/app/app category/SLA "at 4 Mbps, 90% of packets needs to arrive within 100 ms, 100% of packets needs to arrive within 200ms". This list can be as simple as "100% of packets need to arrive within 200ms" or as long as you would like. For the sake of simplicity, the requirements percentiles must match one or more of the percentiles defined in the measurements,  i.e., one can sdet requirements at the [1,50,75,...] percentiles. The last specified percentile marks the acceptable packet loss. I.e. if the 99th percentile is 100, and the 99.9th or 100th percentile is not, 1% packet loss (100-99) is inferred.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<p id="section-4-2">This figure illustrates how distributions that achieve the same 99th percentile latency may be very different. This is one of the reasons why we cannot just use a single threshold for latency is that different distributions may achieve the same latency of 100% of packets or at an average or median.<a href="#section-4-2" class="pilcrow">¶</a></p>
-<p id="section-4-3">Throughput or bandwidth requirements are yet to be mentioned,  applications do of course have throughput requirements. With classical TCP and typical UDP flows, latency and packet loss would be enough, as they are bound to create some latency or packet loss when ramping up throughput if subsequently they become hindered by insufficient bandwidth. However, we cannot always rely on monitoring latency exclusively, as low bandwidth may give poor application outcomes without necessarily inducing a lot of latency. Therefore, the network requirements should include a minimum bandwidth requirement.<a href="#section-4-3" class="pilcrow">¶</a></p>
-<p id="section-4-4">Whether the requirements are one-way or two-way must be specified.<a href="#section-4-4" class="pilcrow">¶</a></p>
-<p id="section-4-5">Uptil now, network requirements and measurements are what is already standardized in BBF TR-452 (aka QED) framework [5]. The novel part of this work is what comes next. A method for going from Network Requirements and Network Measurements to probabilities of outcomes, or Quality of Outcomes if you will.<a href="#section-4-5" class="pilcrow">¶</a></p>
-<p id="section-4-6">To do that we need to make articulating the network requirements a little bit more complicated. A key design goal was to have a distance measure between perfect and useless, and have a way of quantifying what is 'better'.<a href="#section-4-6" class="pilcrow">¶</a></p>
-<p id="section-4-7">We extend the requirements (new highlighted in bold):<a href="#section-4-7" class="pilcrow">¶</a></p>
-<p id="section-4-8">Network Requirements for Perfection (NRP): At 4 Mbps,  99% of packets need to arrive within 100ms, 99.9% within 200ms [implying that 0.1% packet loss is acceptable] for the outcome to be perfect.
-Network Requirement points of uselessness (NRPoU): If 99% of the packets have not arrived after 200ms, or 99.9% within 300ms, the outcome will be useless<a href="#section-4-8" class="pilcrow">¶</a></p>
-<p id="section-4-9">Where the NRPoU percentiles and NRP are a required pair. I.e., if the 99.9th percentile is part of the point of uselessness then the  network requirements must also include the 99.9th percentile.<a href="#section-4-9" class="pilcrow">¶</a></p>
-<p id="section-4-10">A figure showing NRP, NRPoU illustrated in the same fashion as we are used to seeing latency distributions<a href="#section-4-10" class="pilcrow">¶</a></p>
+<p id="section-4-1">This work builds upon the work already proposed in the Broadband Forum standard called Quality of Experience Delivered (QED/TR-452) <span>[<a href="#TR-452.1" class="cite xref">TR-452.1</a>]</span>. In essence, it describes network requirements as a list of percentile and latency requirement tuples. In  words: The network requirement for this app quality level/app/app category/SLA "at 4 Mbps, 90% of packets needs to arrive within 100 ms, 100% of packets needs to arrive within 200ms". This list can be as simple as "100% of packets need to arrive within 200ms" or as long as you would like. For the sake of simplicity, the requirements percentiles must match one or more of the percentiles defined in the measurements,  i.e., one can set requirements at the [1,50,75,...] percentiles. The last specified percentile marks the acceptable packet loss. I.e. if the 99th percentile is 100, and the 99.9th or 100th percentile is not, 1% packet loss (100-99) is inferred.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">Throughput or bandwidth requirements are yet to be mentioned, applications do of course have throughput requirements. With classical TCP and typical UDP flows, latency and packet loss would be enough, as they are bound to create some latency or packet loss when ramping up throughput if subsequently they become hindered by insufficient bandwidth. However, we cannot always rely on monitoring latency exclusively, as low bandwidth may give poor application outcomes without necessarily inducing a lot of latency. Therefore, the network requirements should include a minimum bandwidth requirement.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">Whether the requirements are one-way or two-way must be specified.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">Until now, network requirements and measurements are what is already standardized in BBF TR-452 (aka QED) framework <span>[<a href="#TR-452.1" class="cite xref">TR-452.1</a>]</span>. The novel part of this work is what comes next. A method for going from Network Requirements and Network Measurements to probabilities of outcomes, or Quality of Outcomes if you will.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">To do that we need to make articulating the network requirements a little bit more complicated. A key design goal was to have a distance measure between perfect and useless, and have a way of quantifying what is 'better'.<a href="#section-4-5" class="pilcrow">¶</a></p>
+<p id="section-4-6">We extend the requirements (new highlighted in <strong>bold</strong>):<a href="#section-4-6" class="pilcrow">¶</a></p>
+<p id="section-4-7"><strong>Network Requirements for Perfection (NRP):</strong> At 4 Mbps,  99% of packets need to arrive within 100ms, 99.9% within 200ms [implying that 0.1% packet loss is acceptable] <strong>for the outcome to be perfect</strong>.
+<strong>Network Requirement points of uselessness (NRPoU): If 99% of the packets have not arrived after 200ms, or 99.9% within 300ms, the outcome will be useless.</strong><a href="#section-4-7" class="pilcrow">¶</a></p>
+<p id="section-4-8">Where the NRPoU percentiles and NRP are a required pair. I.e., if the 99.9th percentile is part of the point of uselessness then the  network requirements must also include the 99.9th percentile.<a href="#section-4-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="calculating-quality-of-outcome-qoo">
@@ -1276,15 +1293,20 @@ Network Requirement points of uselessness (NRPoU): If 99% of the packets have no
       <h2 id="name-calculating-quality-of-outc">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-calculating-quality-of-outc" class="section-name selfRef">Calculating Quality of Outcome (QoO)</a>
       </h2>
-<p id="section-5-1">At this point we have everything to calculate the quality of the application outcome. The QoO. There are 3 scenarios:
-The network meets all the requirements for perfection. There is a 100% chance that the application will work lag-free on the network
-The network does meet one of the points of uselessness. There is a 0% chance that the application will work on the network
-The network does not meet NRP but is not beyond NRPoU.
-1 and 2 require nothing more from the framework. For 3, we will now specify the calculation between to translate these distances to a 0 to 100 measure. We use the percentile pair where the measured latency is the closest to the NRPoU as the application is only as good as its weakest link.
-Mathematically:
- min NRP, NRPoU, ML (1-(ML-NRP)/(NRPoU -NRP)) *100)
-Essentially, where on the relative distance between Network Requirement for Perfection (NRP) and Network Requirement Point of Uselessness  (NRPoU) the Measured Latency (ML) lands, normalized to a percentage.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">Where:
+<p id="section-5-1">At this point we have everything to calculate the quality of the application outcome. The QoO. There are 3 scenarios:<a href="#section-5-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-5-2">
+<li id="section-5-2.1">The network meets all the requirements for perfection. There is a 100% chance that the application will work lag-free on the network<a href="#section-5-2.1" class="pilcrow">¶</a>
+</li>
+        <li id="section-5-2.2">The network does meet one of the points of uselessness. There is a 0% chance that the application will work on the network<a href="#section-5-2.2" class="pilcrow">¶</a>
+</li>
+        <li id="section-5-2.3">The network does not meet NRP but is not beyond NRPoU.<a href="#section-5-2.3" class="pilcrow">¶</a>
+</li>
+      </ol>
+<p id="section-5-3">1 and 2 require nothing more from the framework. For 3, we will now specify the calculation between to translate these distances to a 0 to 100 measure. We use the percentile pair where the measured latency is the closest to the NRPoU as the application is only as good as its weakest link.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">Mathematically:
+ QoO = min(ML, NRP, NRPoU) = (1-(ML-NRP)/(NRPoU-NRP)) * 100)<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">Essentially, where on the relative distance between Network Requirement for Perfection (NRP) and Network Requirement Point of Uselessness  (NRPoU) the Measured Latency (ML) lands, normalized to a percentage.<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-6">Where:
 NRP is network requirements for perfection. With minimum throughput and with percentiles and milliseconds
 NRPoU is the points of uselessness. With percentiles and milliseconds
 i is the length of NRP / NRPoU latency per percentile requirements
@@ -1293,12 +1315,12 @@ Example requirements and measured latency:
 NRP: 4 Mbps {99,250},{99.9,350}
 NRPoU:  {99,400},{99.9,401}
 Measured Latency: .... 99p = 350ms, 99.9p = 352ms
-i = 2<a href="#section-5-2" class="pilcrow">¶</a></p>
-<p id="section-5-3">Then the QoO is defined:
+i = 2<a href="#section-5-6" class="pilcrow">¶</a></p>
+<p id="section-5-7">Then the QoO is defined:
 QoO = Min(  ((1-(350 - 250)/(400-250))<em>100),((1-(352 - 350)/(401-350))</em>100))
-= Min (33.33,96.08) = 33.33<a href="#section-5-3" class="pilcrow">¶</a></p>
-<p id="section-5-4">In this example, we would say:
-This [application/SLA/application category] has a 33% chance of being lag-free on this network<a href="#section-5-4" class="pilcrow">¶</a></p>
+= Min (33.33,96.08) = 33.33<a href="#section-5-7" class="pilcrow">¶</a></p>
+<p id="section-5-8">In this example, we would say:
+This [application/SLA/application category] has a 33% chance of being lag-free on this network<a href="#section-5-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="how-to-find-network-requirements">
@@ -1347,70 +1369,66 @@ Build a distribution, sample it at [1p,50p,...99.9p]
 Map the distribution with one or more network requirements. E.g., A network requirement for a Video Conference
 If there is no overlay, the network requirement for the Video Conference is met and the likelihood of perfect application outcome is 100%. I.e., the QoO for Video Conferencing is 100
 If there is an overlay. Use the probability formula to quantify the risk of non-ideal outcome.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">A figure showing how we can measure a current latency distribution, map network requirements on top, and use the distances to calculate a probability of lag free outcome.<a href="#section-8-2" class="pilcrow">¶</a></p>
-<p id="section-8-3">Describing Network Requirements:
+<p id="section-8-2">Describing Network Requirements:
 A minimum throughput
 A list of percentiles and associated ms if reaches guarantees perfection (or at least no degradation because of the network)
-A list of percentiles and associated ms where beyond this point, the application will be useless<a href="#section-8-3" class="pilcrow">¶</a></p>
-<p id="section-8-4">This framework makes few requirements. This does of course have pros and cons. Precision vs useability and flexibility. How, and under what conditions, a latency distribution is gathered is undefined. This flexibility is key to be able to capture a large range of different types of network usage. It is also futureproof, a known problem with many existing network tests is that they define, for example, TCP as the protocol for the test. If all applications adopted BBR, the test would be rendered useless.
+A list of percentiles and associated ms where beyond this point, the application will be useless<a href="#section-8-2" class="pilcrow">¶</a></p>
+<p id="section-8-3">This framework makes few requirements. This does of course have pros and cons. Precision vs useability and flexibility. How, and under what conditions, a latency distribution is gathered is undefined. This flexibility is key to be able to capture a large range of different types of network usage. It is also futureproof, a known problem with many existing network tests is that they define, for example, TCP as the protocol for the test. If all applications adopted BBR, the test would be rendered useless.
 Example Use-Cases:
 Web/Mobile App Network Test for specific application. For example, a Video Conference Service can actively test end-to-end whether the network is good enough for a lag free experience
 Network Equipment Traffic Monitoring. A network equipment can passively monitor latency of real traffic and show QoOs for different types of traffic
 An end-user application can test the network to check whether the QoO, or which  configurations (resolution, fps, etc.)  would be optimal
 An end-user application can ask the network what latency distributions are typical, and thereby calculate their QoO
 Network operators can test and monitor performance on their networks.
-Before and after an equipment / software  upgrade<a href="#section-8-4" class="pilcrow">¶</a></p>
-<p id="section-8-5">Illustration of a before (left) and after (right) of improving a network equipment or path with something like L4S,an AQM like fq_codel/CAKE, or Low-Latency Docsis<a href="#section-8-5" class="pilcrow">¶</a></p>
-<p id="section-8-6">Illustration of a before (left) and after (right) of improving network conditions with something like QoS, better SNR, or channel/band changes.<a href="#section-8-6" class="pilcrow">¶</a></p>
-<p id="section-8-7">Illustration of a segment by segment analysis and adding them together for an end-to-end analysis. In this example, we imagine someone measuring WiFi latency and Internet Access Latency separately. Then doing a QoO analysis for online gaming on each segment. To get to an end-to-end analysis one first has to convolve the latency distributions (a mathematically sound way of adding distribution), then do the QoO analysis on the new distribution.<a href="#section-8-7" class="pilcrow">¶</a></p>
-<p id="section-8-8">Comparing Apps:
+Before and after an equipment / software  upgrade<a href="#section-8-3" class="pilcrow">¶</a></p>
+<p id="section-8-4">Comparing Apps:
 On this network:
 Macrohard Teams have a 93% chance of a lag free experience (Note! Made up numbers!)
 Googol Meets have a 90% chance of a lag free experience (Note! Made up numbers!)
-mooZ have a 88% chance of a lag-free experience (Note! Made up numbers!)<a href="#section-8-8" class="pilcrow">¶</a></p>
-<p id="section-8-9">Application Category / Specific Application QoO scores as an addition to Apple Network Quality test (with responsiveness)
+mooZ have a 88% chance of a lag-free experience (Note! Made up numbers!)<a href="#section-8-4" class="pilcrow">¶</a></p>
+<p id="section-8-5">Application Category / Specific Application QoO scores as an addition to Apple Network Quality test (with responsiveness)
 networkquality
 ==== SUMMARY ====
 Upload capacity: 225.713 Mbps
 Download capacity: 110.458 Mbps
 Upload flows: 20
 Download flows: 20
-Responsiveness: High (3426 RPM)<a href="#section-8-9" class="pilcrow">¶</a></p>
-<p id="section-8-10">Quality of Outcome (QoO) (probability of lag-free):
+Responsiveness: High (3426 RPM)<a href="#section-8-5" class="pilcrow">¶</a></p>
+<p id="section-8-6">Quality of Outcome (QoO) (probability of lag-free):
 Video Conference: 100%
 FaceTime: 100%
 Cloud Gaming: 99%
-Interactive VR: 98%<a href="#section-8-10" class="pilcrow">¶</a></p>
-<p id="section-8-11">--------------------------
+Interactive VR: 98%<a href="#section-8-6" class="pilcrow">¶</a></p>
+<p id="section-8-7">--------------------------
 networkquality more
 ==== SUMMARY ====
 Upload capacity: 225.713 Mbps
 Download capacity: 110.458 Mbps
 Upload flows: 20
 Download flows: 20
-Responsiveness: High (3426 RPM)<a href="#section-8-11" class="pilcrow">¶</a></p>
-<p id="section-8-12">Quality of Outcome (QoO) (probability of lag-free):
+Responsiveness: High (3426 RPM)<a href="#section-8-7" class="pilcrow">¶</a></p>
+<p id="section-8-8">Quality of Outcome (QoO) (probability of lag-free):
 Video Conference: 100%
 FaceTime: 100%
 Cloud Gaming: 99%
 Interactive VR: 98%
 3000 cyclic samples, start 00:08:00, end 00:08:30
 0p=1ms,....,100p=21ms
-// should this include probing type?<a href="#section-8-12" class="pilcrow">¶</a></p>
-<p id="section-8-13">Known Weaknesses:
+// should this include probing type?<a href="#section-8-8" class="pilcrow">¶</a></p>
+<p id="section-8-9">Known Weaknesses:
 Missing Temporal Information in Distributions.
-These two latency series: 1,200,1,200,1,200,1,200,1,200 and 1,1,1,1,1,200,200,200,200,200 Will have identical distributions, but may have different application performance. Ignoring this information is a tradeoff between simplicity and precision. To capture all information necessary to perfectly capture outcomes we are getting into extreme computational complexity. As an application's performance is bound by how the developers change to varying network performance, meaning nearly all different series of latencies may have different application outcomes. I.e., this is O(NN ) territory*. Adding another data point such as a pairwise distance measure to the network requirement will also significantly increase the difficulties of determining Network Requirements as one would need to test a huge amount of series to get it correctly.<a href="#section-8-13" class="pilcrow">¶</a></p>
-<p id="section-8-14">Additionally, we cannot capture latency on every packet that is sent. We can probe and sample, but there will always be unknowns. We are now in the realm of probability. Perfection is impossible, but instead of denying this,  we should embrace it, which is why talking about the probability of outcomes is the way forward. An advantage of the QoO framework is having a single distance measure between perfect and useless as it lets us approximate probabilities in between and treating it as a probability. 99% chance of being lag free, means there is a 1% chance of lag.<a href="#section-8-14" class="pilcrow">¶</a></p>
-<p id="section-8-15">*If we imagine network latency could only be either 1 or 2 ms and that no flow was more than 3 packets long, for an application to check whether without discarding any temporal information, a network requirement would have to account for all combinations of latency. I.e.,:
+These two latency series: 1,200,1,200,1,200,1,200,1,200 and 1,1,1,1,1,200,200,200,200,200 Will have identical distributions, but may have different application performance. Ignoring this information is a tradeoff between simplicity and precision. To capture all information necessary to perfectly capture outcomes we are getting into extreme computational complexity. As an application's performance is bound by how the developers change to varying network performance, meaning nearly all different series of latencies may have different application outcomes. I.e., this is O(NN ) territory*. Adding another data point such as a pairwise distance measure to the network requirement will also significantly increase the difficulties of determining Network Requirements as one would need to test a huge amount of series to get it correctly.<a href="#section-8-9" class="pilcrow">¶</a></p>
+<p id="section-8-10">Additionally, we cannot capture latency on every packet that is sent. We can probe and sample, but there will always be unknowns. We are now in the realm of probability. Perfection is impossible, but instead of denying this,  we should embrace it, which is why talking about the probability of outcomes is the way forward. An advantage of the QoO framework is having a single distance measure between perfect and useless as it lets us approximate probabilities in between and treating it as a probability. 99% chance of being lag free, means there is a 1% chance of lag.<a href="#section-8-10" class="pilcrow">¶</a></p>
+<p id="section-8-11">*If we imagine network latency could only be either 1 or 2 ms and that no flow was more than 3 packets long, for an application to check whether without discarding any temporal information, a network requirement would have to account for all combinations of latency. I.e.,:
 1,1,1 -  1,2,1 - ,1,1,2 - 1,2,2 - 2.1,1 - 2,2,1 - 2,1,2, - 2-2-2.
-In big O notation: N = 1 or 2 ms = 2. M = 3 packets, 2^3=8 or O(N^M)<a href="#section-8-15" class="pilcrow">¶</a></p>
-<p id="section-8-16">Assuming Linear Relationship between Perfect (and that it is not really a probability)
-One can conjure up scenarios where 50ms latency is actually worse than 51ms latency as developers may have chosen 50ms as the threshold for changing quality, and the threshold may be imperfect.Taking these scenarios into account would add another magnitude of complexity to determining network requirements and finding a distance measure (between requirement and actual measured capability), and the scenarios are likely rare.<a href="#section-8-16" class="pilcrow">¶</a></p>
-<p id="section-8-17">In a scenario where:
+In big O notation: N = 1 or 2 ms = 2. M = 3 packets, 2^3=8 or O(N^M)<a href="#section-8-11" class="pilcrow">¶</a></p>
+<p id="section-8-12">Assuming Linear Relationship between Perfect (and that it is not really a probability)
+One can conjure up scenarios where 50ms latency is actually worse than 51ms latency as developers may have chosen 50ms as the threshold for changing quality, and the threshold may be imperfect.Taking these scenarios into account would add another magnitude of complexity to determining network requirements and finding a distance measure (between requirement and actual measured capability), and the scenarios are likely rare.<a href="#section-8-12" class="pilcrow">¶</a></p>
+<p id="section-8-13">In a scenario where:
 50ms p99.9 latency = 50% QoO,
 51ms p99.9 latency = 49% QoO,
 52ms p99.9 latency = 48% QoO
-The linear relationship is assumed. This may not always hold true, but will likely be adequate.  Taking non-linear approaches into account would make creating network requirements at least one order of magnitude more difficult.<a href="#section-8-17" class="pilcrow">¶</a></p>
+The linear relationship is assumed. This may not always hold true, but will likely be adequate.  Taking non-linear approaches into account would make creating network requirements at least one order of magnitude more difficult.<a href="#section-8-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
