@@ -5,7 +5,7 @@
 IP Performance Measurement                                      M. Olden
 Internet-Draft                                              B. I. Teigen
 Intended status: Informational                                     Domos
-Expires: 31 July 2023                                    27 January 2023
+Expires: 3 August 2023                                   30 January 2023
 
 
                            Quality of Outcome
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 July 2023.
+   This Internet-Draft will expire on 3 August 2023.
 
 Copyright Notice
 
@@ -74,12 +74,12 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
-   2.  Proposal:
-   3.  Sampling requirements:
-   4.  Describing Network Requirements:
+   2.  Proposal
+   3.  Sampling requirements
+   4.  Describing Network Requirements
    5.  Calculating Quality of Outcome (QoO)
    6.  How to find network requirements
-   7.  An example:
+   7.  An example
    8.  Summarizing the framework
    9.  Conventions and Definitions
    10. Security Considerations
@@ -91,6 +91,11 @@ Table of Contents
    Authors' Addresses
 
 1.  Introduction
+
+   [draft-teigen-ippm-app-quality-metric-reqs] describes a set of
+   requirements for a network quality framework.  This document explores
+   how the quality attenuation metric and framework can be extended to
+   meet the full set of requirements.
 
    Quality attenuation is a network quality metric that meets the three
    criteria we set out in the requirements; it captures the probabilty
@@ -119,7 +124,7 @@ Table of Contents
    counter the loss of precision, we require some parameters that allow
    for analysis of the precision.
 
-2.  Proposal:
+2.  Proposal
 
    The foundation of the framework is Latency Distributions.  This work
    will not go into detail about how to gather them, but some techniques
@@ -172,7 +177,7 @@ Table of Contents
    by the CDF not reaching 1 (because less than 100% of packets arrive
    at their destination).
 
-3.  Sampling requirements:
+3.  Sampling requirements
 
    To reach the design goal of being useful in many different contexts,
    this work imposes no requirement on the time period or the network
@@ -228,7 +233,7 @@ Table of Contents
 
       -  Passive (observing traffic and therefore unevenly sampled)
 
-4.  Describing Network Requirements:
+4.  Describing Network Requirements
 
    This work builds upon the work already proposed in the Broadband
    Forum standard called Quality of Experience Delivered (QED/TR-452)
@@ -317,7 +322,6 @@ Table of Contents
    Latency in percentiles and milliseconds Example requirements and
    measured latency: NRP: 4 Mbps {99,250},{99.9,350} NRPoU:
    {99,400},{99.9,401} Measured Latency: .... 99p = 350ms, 99.9p = 352ms
-   i = 2
 
    Then the QoO is defined: QoO = Min( ((1-(350 -
    250)/(400-250))_100),((1-(352 - 350)/(401-350))_100)) = Min
@@ -331,7 +335,7 @@ Table of Contents
    A key advantage of having a measurement that stretches between
    perfect and useless, as opposed to having a binary (Good/Bad) or
    other low resolution (Superbad/Bad/OK/Great/Supergreat) metrics, is
-   that we have some leeway . The leeway is useful, for instance: a
+   that we have some leeway.  The leeway is useful, for instance: a
    lower than 20% chance of lag free experience is intuitively not good
    and a greater than 90% chance of lag free experience is intuitively
    good - meaning we don't have to find perfection for making the QoO
@@ -348,15 +352,21 @@ Table of Contents
 
    Someone who wishes to make a network requirement for an application
    in the simplest possible way, should do something along these lines.
-   Simulate increasing levels of latency Observe the application and
-   note the threshold where the application stops working perfectly
-   Observe the application and note the threshold where the application
-   stops being useful at all Someone who wishes to find sophisticated
-   network requirements for and Set thresholds for acceptable fps,
-   animation fluidity, i/o latency (voice, video, actions), or other
-   observable user-facing metrics Create a tool for measuring these
-   user-facing metrics Simulate varying latency distribution with
-   increasing levels of latency while measuring the user facing metrics.
+
+   *  Simulate increasing levels of latency
+
+   *  Observe the application and note the threshold where the
+      application stops working perfectly
+
+   *  Observe the application and note the threshold where the
+      application stops being useful at all
+
+   Someone who wishes to find sophisticated network requirements for and
+   * Set thresholds for acceptable fps, animation fluidity, i/o latency
+   (voice, video, actions), or other observable user-facing metrics *
+   Create a tool for measuring these user-facing metrics * Simulate
+   varying latency distribution with increasing levels of latency while
+   measuring the user facing metrics.
 
    A QoO score at 94 can be communicated as "Johns iPhone has a 94%
    chance of lag-free Video Conferencing", however, this does not mean
@@ -366,16 +376,16 @@ Table of Contents
    accordingly.
 
    The reason for making the QoO metric for a session or time-period is
-   to make it understandable for an end-user, an end-user like a should
-   not have to relate to the time period the metric is for.
+   to make it understandable for an end-user, an end-user should not
+   have to relate to the time period the metric is for.
 
-7.  An example:
+7.  An example
 
-   Microsofts own video-conferencing service [7],[8] can be translated
-   into the QoO Framework.  For best performance for video meetings they
-   specify 4/4 Mbps, 100 ms latency, <1% packet loss, and <30 ms jitter.
-   This can be translated to an NRP (if we take some liberties with
-   interpreting their jitter score);
+   Microsofts own video-conferencing service requirements for Teams can
+   be translated into the QoO Framework.  For best performance for video
+   meetings they specify 4/4 Mbps, 100 ms latency, <1% packet loss, and
+   <30 ms jitter.  This can be translated to an NRP (if we take some
+   liberties with interpreting their jitter score);
 
    NRP Microsoft Teams: At minimum 4/4 Mbps. {0p=70ms,99p=100ms}
 
@@ -387,16 +397,16 @@ Table of Contents
 
    Of course, it is possible to specify network requirements for Teams
    with multiple NRP/NRPoU, for different quality levels or one/two way
-   video and so on.  Then one can calculate the QoO at each level. ....
+   video and so on.  Then one can calculate the QoO at each level.
 
 8.  Summarizing the framework
 
    Calculating QoO: Measure latency Build a distribution, sample it at
    [1p,50p,...99.9p] Map the distribution with one or more network
    requirements.  E.g., A network requirement for a Video Conference If
-   there is no overlay, the network requirement for the Video Conference
+   there is no overlap, the network requirement for the Video Conference
    is met and the likelihood of perfect application outcome is 100%.
-   I.e., the QoO for Video Conferencing is 100 If there is an overlay.
+   I.e., the QoO for Video Conferencing is 100.  If there is an overlap.
    Use the probability formula to quantify the risk of non-ideal
    outcome.
 
@@ -416,15 +426,15 @@ Table of Contents
    adopted BBR, the test would be rendered useless.  Example Use-Cases:
    Web/Mobile App Network Test for specific application.  For example, a
    Video Conference Service can actively test end-to-end whether the
-   network is good enough for a lag free experience Network Equipment
+   network is good enough for a lag free experience.  Network Equipment
    Traffic Monitoring.  A network equipment can passively monitor
-   latency of real traffic and show QoOs for different types of traffic
+   latency of real traffic and show QoOs for different types of traffic.
    An end-user application can test the network to check whether the
-   QoO, or which configurations (resolution, fps, etc.) would be optimal
-   An end-user application can ask the network what latency
-   distributions are typical, and thereby calculate their QoO Network
+   QoO, or which configurations (resolution, fps, etc.) would be
+   optimal.  An end-user application can ask the network what latency
+   distributions are typical, and thereby calculate their QoO.  Network
    operators can test and monitor performance on their networks.  Before
-   and after an equipment / software upgrade
+   and after an equipment / software upgrade.
 
    Comparing Apps: On this network: Macrohard Teams have a 93% chance of
    a lag free experience (Note!  Made up numbers!)  Googol Meets have a
@@ -535,6 +545,10 @@ Table of Contents
    [Bufferbloat]
               "Bufferbloat: Dark buffers in the Internet", n.d.,
               <https://queue.acm.org/detail.cfm?id=2071893>.
+
+   [draft-teigen-ippm-app-quality-metric-reqs]
+              "Requirements for a Network Quality Framework Useful for
+              Applications, Users, and Operators", n.d..
 
    [Haeri22]  "Mind Your Outcomes: The &#916;QSD Paradigm for Quality-
               Centric Systems Development and Its Application to a
