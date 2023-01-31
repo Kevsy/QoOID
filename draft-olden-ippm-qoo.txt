@@ -5,7 +5,7 @@
 IP Performance Measurement                                      M. Olden
 Internet-Draft                                              B. I. Teigen
 Intended status: Informational                                     Domos
-Expires: 3 August 2023                                   30 January 2023
+Expires: 4 August 2023                                   31 January 2023
 
 
                            Quality of Outcome
@@ -28,8 +28,8 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://domoslabs.github.io/QoORFC/draft-teigen-ippm-qoo.html.
-   Status information for this document may be found at
+   https://domoslabs.github.io/QoOID/draft-olden-ippm-qoo.html.  Status
+   information for this document may be found at
    https://datatracker.ietf.org/doc/draft-olden-ippm-qoo/.
 
    Discussion of this document takes place on the IP Performance
@@ -38,7 +38,7 @@ About This Document
    Subscribe at https://www.ietf.org/mailman/listinfo/ippm/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/domoslabs/QoORFC.
+   https://github.com/domoslabs/QoOID.
 
 Status of This Memo
 
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 August 2023.
+   This Internet-Draft will expire on 4 August 2023.
 
 Copyright Notice
 
@@ -98,24 +98,24 @@ Table of Contents
    meet the full set of requirements.
 
    Quality attenuation is a network quality metric that meets the three
-   criteria we set out in the requirements; it captures the probabilty
-   of good or bad application outcomes, it is composable, and it can be
-   compared to a variety of application requirements.  The part that is
-   still missing is how to present quality attenuation results to end-
-   users and application developers in an understandable way.  We
-   believe a per-application (or per application-type) approach is
-   appropriate here.  The challenge lies in how to simplify.  We must
+   criteria we set out in the requirements; it can capture the
+   probabilty of good or bad application outcomes, it is composable, and
+   it can be compared to a variety of application requirements.  The
+   part that is still missing is how to present quality attenuation
+   results to end-users and application developers in an understandable
+   way.  We believe a per-application (or per application-type) approach
+   is appropriate here.  The challenge lies in how to simplify.  We must
    specify how and when it is apporpriate to throw away information
    without loosing too much precision and accuracy in the results.
 
-   We propose measuring network quality as a set of latency percentiles
-   and for application developers to describe network requirements in
-   the same manner.  We propose a formula for a distance measure between
-   perfect and useless quality.  This distance measure can calculate
-   something that can be simplified into statements such as "A Video
-   Conference has a 93% chance of being lag free on this network" all
-   while making it possible to use the framework both for end-to-end
-   test and from within.
+   We propose representing network quality as a set of latency
+   percentiles and for application developers to describe network
+   requirements in the same manner.  We propose a formula for a distance
+   measure between perfect and useless quality.  This distance measure
+   can calculate something that can be simplified into statements such
+   as “A Video Conference has a 93% chance of being lag free on this
+   network” all while making it possible to use the framework both for
+   end-to-end test and from within.
 
    The work proposes a minimum viable framework, and often trades
    precision for simplicity.  The justification for this is to ensure
@@ -239,10 +239,10 @@ Table of Contents
    Forum standard called Quality of Experience Delivered (QED/TR-452)
    [TR-452.1].  In essence, it describes network requirements as a list
    of percentile and latency requirement tuples.  In words: The network
-   requirement for this app quality level/app/app category/SLA "at 4
+   requirement for this app quality level/app/app category/SLA “at 4
    Mbps, 90% of packets needs to arrive within 100 ms, 100% of packets
-   needs to arrive within 200ms".  This list can be as simple as "100%
-   of packets need to arrive within 200ms" or as long as you would like.
+   needs to arrive within 200ms”. This list can be as simple as “100% of
+   packets need to arrive within 200ms” or as long as you would like.
    For the sake of simplicity, the requirements percentiles must match
    one or more of the percentiles defined in the measurements, i.e., one
    can set requirements at the [1,50,75,...] percentiles.  The last
@@ -272,7 +272,7 @@ Table of Contents
    To do that we need to make articulating the network requirements a
    little bit more complicated.  A key design goal was to have a
    distance measure between perfect and useless, and have a way of
-   quantifying what is 'better'.
+   quantifying what is ‘better’.
 
    We extend the requirements (new highlighted in *bold*):
 
@@ -338,7 +338,7 @@ Table of Contents
    that we have some leeway.  The leeway is useful, for instance: a
    lower than 20% chance of lag free experience is intuitively not good
    and a greater than 90% chance of lag free experience is intuitively
-   good - meaning we don't have to find perfection for making the QoO
+   good - meaning we don’t have to find perfection for making the QoO
    metric useful.
 
    Nevertheless we have to find some points for uselessness and
@@ -385,7 +385,7 @@ Table of Contents
    be translated into the QoO Framework.  For best performance for video
    meetings they specify 4/4 Mbps, 100 ms latency, <1% packet loss, and
    <30 ms jitter.  This can be translated to an NRP (if we take some
-   liberties with interpreting their jitter score);
+   liberties with interpreting their jitter score):
 
    NRP Microsoft Teams: At minimum 4/4 Mbps. {0p=70ms,99p=100ms}
 
@@ -450,7 +450,7 @@ Table of Contents
    Quality of Outcome (QoO) (probability of lag-free): Video Conference:
    100% FaceTime: 100% Cloud Gaming: 99% Interactive VR: 98%
 
-   -------------------------- networkquality more ==== SUMMARY ====
+   —------------------------ networkquality more ==== SUMMARY ====
    Upload capacity: 225.713 Mbps Download capacity: 110.458 Mbps Upload
    flows: 20 Download flows: 20 Responsiveness: High (3426 RPM)
 
