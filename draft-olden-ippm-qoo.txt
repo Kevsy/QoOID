@@ -314,9 +314,9 @@ Table of Contents
        a 100% chance that the application is not lagging because of the
        network
 
-   2.  The network does meet one of the points of uselessness, including
-       bandwidth.  There is a 0% chance that the application will work
-       becuase of the network
+   2.  The network does meet one of the criteria of uselessness,
+       including bandwidth.  There is a 0% chance that the application
+       will work because of the network
 
    3.  The network does not meet NRP but is not beyond NRPoU.
 
