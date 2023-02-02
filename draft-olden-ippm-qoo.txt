@@ -5,7 +5,7 @@
 IP Performance Measurement                                      M. Olden
 Internet-Draft                                              B. I. Teigen
 Intended status: Informational                                     Domos
-Expires: 4 August 2023                                   31 January 2023
+Expires: 6 August 2023                                   2 February 2023
 
 
                            Quality of Outcome
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 August 2023.
+   This Internet-Draft will expire on 6 August 2023.
 
 Copyright Notice
 
@@ -78,19 +78,23 @@ Table of Contents
    3.  Sampling requirements
    4.  Describing Network Requirements
    5.  Calculating Quality of Outcome (QoO)
+     5.1.  Example requirements and measured latency:
    6.  How to find network requirements
-   7.  An example
-   8.  Known Weaknesses
-     8.1.  Missing Temporal Information in Distributions.
-     8.2.  Subsampling the real distribution
-     8.3.  Assuming Linear Relationship between Perfect and useless
+     6.1.  An example
+   7.  Known Weaknesses and open questions
+     7.1.  Missing Temporal Information in Distributions.
+     7.2.  Subsampling the real distribution
+     7.3.  Assuming Linear Relationship between Perfect and useless
            (and that it is not really a probability)
-   9.  Conventions and Definitions
-   10. Security Considerations
-   11. IANA Considerations
-   12. References
-     12.1.  Normative References
-     12.2.  Informative References
+     7.4.  Binary Bandwidth threshold
+     7.5.  Low resolution on Packet Loss
+     7.6.  Arbitrary selection of percentiles:
+   8.  Conventions and Definitions
+   9.  Security Considerations
+   10. IANA Considerations
+   11. References
+     11.1.  Normative References
+     11.2.  Informative References
    Acknowledgments
    Authors' Addresses
 
@@ -101,25 +105,36 @@ Table of Contents
    how the quality attenuation metric and framework can be extended to
    meet the full set of requirements.
 
-   Quality attenuation is a network quality metric that meets the three
-   criteria we set out in the requirements; it can capture the
-   probabilty of good or bad application outcomes, it is composable, and
-   it can be compared to a variety of application requirements.  The
-   part that is still missing is how to present quality attenuation
-   results to end-users and application developers in an understandable
-   way.  We believe a per-application (or per application-type) approach
-   is appropriate here.  The challenge lies in how to simplify.  We must
-   specify how and when it is apporpriate to throw away information
-   without loosing too much precision and accuracy in the results.
+   Quality attenuation is a network quality metric that meets the most
+   of the criterias set out in the requirements; it can capture the
+   probabilty of a network satisfying network requirements, it is
+   composable, and it can be compared to a variety of application
+   requirements.  The part that is still missing is how to present
+   quality attenuation results to end-users and application developers
+   in an understandable way.  We believe a per-application, per
+   application-type, or per-SLA approach is appropriate here.  The
+   challenge lies in how to simplify.  We must specify how and when it
+   is apporpriate to throw away information without loosing too much
+   precision and accuracy in the results.
+
+   We believe the probibibalistic approach is key as the network stack
+   and network quality adoption for applications can be highly complex.
+   Applications and the underlying networking protocols makes separate
+   optimizations based on their percieved network quality over time and
+   saying something certain about an outcome will be practically
+   impossible.  However, we can make educated guesses on the probability
+   of outcomes.
 
    We propose representing network quality as a set of latency
-   percentiles and for application developers to describe network
+   percentiles and minimum throughput.  Application developers,
+   regulatory bodies and other interested parties can describe network
    requirements in the same manner.  We propose a formula for a distance
    measure between perfect and useless quality.  This distance measure
-   can calculate something that can be simplified into statements such
-   as “A Video Conference has a 93% chance of being lag free on this
-   network” all while making it possible to use the framework both for
-   end-to-end test and from within.
+   can, with some assumptions, calculate something that can be
+   simplified into statements such as “A Video Conference has a 93%
+   chance of being lag free on this network” all while making it
+   possible to use the framework both for end-to-end test and analysis
+   from within the network.
 
    The work proposes a minimum viable framework, and often trades
    precision for simplicity.  The justification for this is to ensure
@@ -146,7 +161,7 @@ Table of Contents
 
    *  TCP SYN ACK / DNS Lookup RTT Capture
 
-   *  Estimation based on other performance data
+   *  Estimation
 
    Quality Attenuation represents quality measurements as distributions.
    Using Latency distributions to measure network quality is nothing new
@@ -175,22 +190,17 @@ Table of Contents
 
    Two distributions can be composed using convolution [TR-452.1].
 
-   Latency Distributions are often illustrated with Cumulative
-   Distributions Function (CDFs).  CDFs make it easy to show the share
-   of packets that have arrived at their destination after specific
-   amounts of time, and vica versa.  Packet Loss can also be illustrated
-   by the CDF not reaching 1 (because less than 100% of packets arrive
-   at their destination).
-
 3.  Sampling requirements
 
-   To reach the design goal of being useful in many different contexts,
-   this work imposes no requirement on the time period or the network
-   loading situation.  This choice has pros and cons.  Latency under
-   load is extremely important, but average or median latency has a role
-   too.  However, a network quality metric that does not take latency
-   under load into account is bound to fail at predicting application
-   outcome.
+   To reach the design goal of being useful in the contexts laid out in
+   "Requirements for a Network Quality Framework Useful for
+   Applications, Users and Operators"
+   [draft-teigen-ippm-app-quality-metric-reqs], this work imposes no
+   requirement on the time period or the network loading situation.
+   This choice has pros and cons.  Latency under load is extremely
+   important, but average or median latency has a role too.  However, a
+   network quality metric that does not take latency under load into
+   account is bound to fail at predicting application outcome.
 
    This framework only requires a latency distribution.  If one samples
    latency over a time period where the network is loaded, latency under
@@ -238,6 +248,9 @@ Table of Contents
 
       -  Passive (observing traffic and therefore unevenly sampled)
 
+   By requiring the report of these variables, we ensure that the
+   network measurements can be analyzed for precision and confidence.
+
 4.  Describing Network Requirements
 
    This work builds upon the work already proposed in the Broadband
@@ -250,10 +263,11 @@ Table of Contents
    packets need to arrive within 200ms” or as long as you would like.
    For the sake of simplicity, the requirements percentiles must match
    one or more of the percentiles defined in the measurements, i.e., one
-   can set requirements at the [1,50,75,...] percentiles.  The last
-   specified percentile marks the acceptable packet loss.  I.e. if the
-   99th percentile is 100, and the 99.9th or 100th percentile is not, 1%
-   packet loss (100-99) is inferred.
+   can set requirements at the [0th, 10th, 25th, 50th, 75th, 90th, 95th,
+   99th, 99.9th, 100th] percentiles.  The last specified percentile
+   marks the acceptable packet loss.  I.e. if the 99th percentile is
+   100, and the 99.9th or 100th percentile is not, 1% packet loss
+   (100-99) is inferred.
 
    Throughput or bandwidth requirements are yet to be mentioned,
    applications do of course have throughput requirements.  With
@@ -282,8 +296,8 @@ Table of Contents
    We extend the requirements (new highlighted in *bold*):
 
    *Network Requirements for Perfection (NRP):* At 4 Mbps, 99% of
-   packets need to arrive within 100ms, 99.9% within 200ms [implying
-   that 0.1% packet loss is acceptable] *for the outcome to be perfect*.
+   packets need to arrive within 100ms, 99.9% within 200ms (implying
+   that 0.1% packet loss is acceptable) *for the outcome to be perfect*.
    *Network Requirement points of uselessness (NRPoU): If 99% of the
    packets have not arrived after 200ms, or 99.9% within 300ms, the
    outcome will be useless.*
@@ -298,11 +312,12 @@ Table of Contents
    application outcome.  The QoO.  There are 3 scenarios:
 
    1.  The network meets all the requirements for perfection.  There is
-       a 100% chance that the application will work lag-free on the
+       a 100% chance that the application is not lagging because of the
        network
 
-   2.  The network does meet one of the points of uselessness.  There is
-       a 0% chance that the application will work on the network
+   2.  The network does meet one of the points of uselessness, including
+       bandwidth.  There is a 0% chance that the application will work
+       becuase of the network
 
    3.  The network does not meet NRP but is not beyond NRPoU.
 
@@ -324,16 +339,20 @@ Table of Contents
    throughput and with percentiles and milliseconds NRPoU is the points
    of uselessness.  With percentiles and milliseconds i is the length of
    NRP / NRPoU latency per percentile requirements ML is Measured
-   Latency in percentiles and milliseconds Example requirements and
-   measured latency: NRP: 4 Mbps {99,250},{99.9,350} NRPoU:
-   {99,400},{99.9,401} Measured Latency: .... 99p = 350ms, 99.9p = 352ms
+   Latency in percentiles and milliseconds
+
+5.1.  Example requirements and measured latency:
+
+   NRP: 4 Mbps {99,250},{99.9,350} NRPoU: {99,400},{99.9,401} Measured
+   Latency: .... 99p = 350ms, 99.9p = 352ms Measured Minumum bandwidth:
+   32 Mbps / 28Mbps
 
    Then the QoO is defined: QoO = Min( ((1-(350 -
    250)/(400-250))_100),((1-(352 - 350)/(401-350))_100)) = Min
    (33.33,96.08) = 33.33
 
-   In this example, we would say: This [application/SLA/application
-   category] has a 33% chance of being lag-free on this network
+   In this example, we would say: This application/SLA/application
+   category has a 33% chance of being lag-free on this network
 
 6.  How to find network requirements
 
@@ -384,7 +403,7 @@ Table of Contents
    to make it understandable for an end-user, an end-user should not
    have to relate to the time period the metric is for.
 
-7.  An example
+6.1.  An example
 
    Microsofts own video-conferencing service requirements for Teams can
    be translated into the QoO Framework.  For best performance for video
@@ -404,14 +423,16 @@ Table of Contents
    with multiple NRP/NRPoU, for different quality levels or one/two way
    video and so on.  Then one can calculate the QoO at each level.
 
-8.  Known Weaknesses
+7.  Known Weaknesses and open questions
 
    We have described a way of simplifying how the network requirements
    of applications can be compared to quality attenuation measurements.
    The simplification introduces several artifacts that may or may not
-   be significant.
+   be significant.  If new information emerge that indicate other
+   tradeoffs are more fit for our purpose, we should switch before this
+   Internet Draft moves further
 
-8.1.  Missing Temporal Information in Distributions.
+7.1.  Missing Temporal Information in Distributions.
 
    These two latency series: 1,200,1,200,1,200,1,200,1,200 and
    1,1,1,1,1,200,200,200,200,200 Will have identical distributions, but
@@ -423,7 +444,7 @@ Table of Contents
    varying network performance, meaning nearly all different series of
    latencies may have different application outcomes.
 
-8.2.  Subsampling the real distribution
+7.2.  Subsampling the real distribution
 
    Additionally, we cannot capture latency on every packet that is sent.
    We can probe and sample, but there will always be unknowns.  We are
@@ -431,7 +452,7 @@ Table of Contents
    instead of denying this, we should embrace it, which is why talking
    about the probability of outcomes is the way forward.
 
-8.3.  Assuming Linear Relationship between Perfect and useless (and that
+7.3.  Assuming Linear Relationship between Perfect and useless (and that
       it is not really a probability)
 
    One can conjure up scenarios where 50ms latency is actually worse
@@ -441,7 +462,41 @@ Table of Contents
    complexity to determining network requirements and finding a distance
    measure (between requirement and actual measured capability).
 
-9.  Conventions and Definitions
+7.4.  Binary Bandwidth threshold
+
+   Choosing this is to reduce complexity, but we do acknowledge that the
+   applications are not that simple.  The defence for this trade off is
+   that insufficient bandwidth will cause queues and therefore latency,
+   and it should be possible to see this.  Additionally, network
+   requirements can be set up per quality level (resolution, fps etc.)
+   for the application.  However, having too many network requirements
+   also increases the complexity for users of the framework, and it is
+   still unclear if this is the optimal tradeoff.
+
+7.5.  Low resolution on Packet Loss
+
+   To ensure simplicity, packet loss is described as infinite latency
+   and the resolution will be bound to the percentiles we chose to
+   sample.  There is a good argument that some applications need higher
+   resolution on packet loss for sufficiently describing application
+   outcomes.  If this good evidence is presented for this, packet loss
+   should be measured separately and added to the QoO formula.
+
+7.6.  Arbitrary selection of percentiles:
+
+   There is a need for a selection of percentiles, as we in the name of
+   simplicity can’t use them all.  But how should we select them?  The
+   0th (minimal) and 50th (median) percentile have implicit usage by
+   themselves.  [BITAG] discusses that the 90th, 98th and 99th
+   percentiles are key for some apps.  In general the wisdom is that the
+   higher percentiles are more useful for interactive applications, but
+   only to a certain point.  At this point an application sees it as
+   packet loss and may adapt to it.  Should we pick the 95th, 96th
+   percentile, the 96.5th or the 97th?  We don’t know, and as this is
+   likely not universal across applications and applications classes, we
+   simply have to choose arbitrarily, and to the best of our knowledge.
+
+8.  Conventions and Definitions
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -449,17 +504,17 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-10.  Security Considerations
+9.  Security Considerations
 
    TODO Security
 
-11.  IANA Considerations
+10.  IANA Considerations
 
    This document has no IANA actions.
 
-12.  References
+11.  References
 
-12.1.  Normative References
+11.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -470,49 +525,15 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-12.2.  Informative References
+11.2.  Informative References
 
    [BITAG]    BITAG, "Latency Explained", October 2022,
               <https://www.bitag.org/documents/
               BITAG_latency_explained.pdf>.
 
-   [Bufferbloat]
-              "Bufferbloat: Dark buffers in the Internet", n.d.,
-              <https://queue.acm.org/detail.cfm?id=2071893>.
-
    [draft-teigen-ippm-app-quality-metric-reqs]
               "Requirements for a Network Quality Framework Useful for
               Applications, Users, and Operators", n.d..
-
-   [Haeri22]  "Mind Your Outcomes: The &#916;QSD Paradigm for Quality-
-              Centric Systems Development and Its Application to a
-              Blockchain Case Study", n.d.,
-              <https://www.mdpi.com/2073-431X/11/3/45>.
-
-   [RFC8033]  Pan, R., Natarajan, P., Baker, F., and G. White,
-              "Proportional Integral Controller Enhanced (PIE): A
-              Lightweight Control Scheme to Address the Bufferbloat
-              Problem", RFC 8033, DOI 10.17487/RFC8033, February 2017,
-              <https://www.rfc-editor.org/rfc/rfc8033>.
-
-   [RFC8290]  Hoeiland-Joergensen, T., McKenney, P., Taht, D., Gettys,
-              J., and E. Dumazet, "The Flow Queue CoDel Packet Scheduler
-              and Active Queue Management Algorithm", RFC 8290,
-              DOI 10.17487/RFC8290, January 2018,
-              <https://www.rfc-editor.org/rfc/rfc8290>.
-
-   [RFC9318]  Hardaker, W. and O. Shapira, "IAB Workshop Report:
-              Measuring Network Quality for End-Users", RFC 9318,
-              DOI 10.17487/RFC9318, October 2022,
-              <https://www.rfc-editor.org/rfc/rfc9318>.
-
-   [RPM]      "Responsiveness under Working Conditions", July 2022,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-ippm-
-              responsiveness>.
-
-   [RRUL]     "Real-time response under load test specification", n.d.,
-              <https://www.bufferbloat.net/projects/bloat/wiki/
-              RRUL_Spec/>.
 
    [TR-452.1] Broadband Forum, "TR-452.1: Quality Attenuation
               Measurement Architecture and Requirements", September
